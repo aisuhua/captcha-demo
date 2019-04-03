@@ -38,6 +38,12 @@ http://captcha.example.com/chinese/index.html
 
 ![](chinese.png)
 
+中文验证码输入时的样子
+
+![](chinese_inputing.png)
+
+当然，你可以点击 X 将已输入的验证码清空。
+
 [1]: basic
 [2]: securimage
 [3]: chinese
