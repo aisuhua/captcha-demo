@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>中文验证码示例</title>
+    <link href="static/css/style.css" rel="stylesheet" type="text/css"/>
+    <script src="static/js/jquery.js"></script>
+</head>
+<body>
+
+    <div class="security-banner">
+        <div class="scb-wrap">
+            <i></i>
+            <span>你的账号使用异常，为保障账号安全，</span>
+            <span>系统已开启临时保护措施，重新验证即可正常使用。</span>
+        </div>
+    </div>
+
+    <div id="js_ver_code_box" class="security-container">
+        <div class="popup-vcode-han" style="">
+            <h3><span>请输入验证码</span><a href="javascript:;" rel="close" class="close">关闭</a></h3>
+            <div class="vcode-contents">
+                <div class="vcode-inbox">
+                    <div rel="result" class="vcode-list"></div>
+                    <div class="action">
+                        <button rel="del" type="button"><i>删除</i></button>
+                    </div>
+                </div>
+                <div class="vcode-value"><img class="vcode_img" src="api/captcha1.php"> <span><a class="refresh" href="javascript:;">看不清？换一个</a></span></div>
+                <div class="vcode-key">
+                    <h4>点击以下文字输入验证码</h4>
+                    <div rel="key_list" class="key-list" style="">
+                        <button type="button" v_key="0"><i></i></button>
+                        <button type="button" v_key="1"><i></i></button>
+                        <button type="button" v_key="2"><i></i></button>
+                        <button type="button" v_key="3"><i></i></button>
+                        <button type="button" v_key="4"><i></i></button>
+                        <button type="button" v_key="5"><i></i></button>
+                        <button type="button" v_key="6"><i></i></button>
+                        <button type="button" v_key="7"><i></i></button>
+                        <button type="button" v_key="8"><i></i></button>
+                        <button type="button" v_key="9"><i></i></button>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <button class="verify" type="button">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 加载选项列表
+        window.onload = function() {
+            $('.key-list').css('background-image', 'url(api/captcha2.php?_t=' + Date.now() + ')');
+        };
+
+        function refresh() {
+            // 清空答案
+            $('.vcode-list').html('');
+
+            // 刷新验证码
+            $('.vcode_img').attr('src', 'api/captcha1.php?_t=' + Date.now());
+
+            // 延迟刷新选项列表
+            setTimeout(function () {
+                $('.key-list').css('background-image', 'url(api/captcha2.php?_t=' + Date.now() + ')');
+            }, 100);
+        }
+
+        // 刷新验证码
+        $('.refresh').click(function () {
+            refresh();
+        });
+
+        // 点选验证码
+        $('.key-list button').click(function() {
+            if ($('.vcode-list img').length >= 4) {
+                return true;
+            }
+
+            var key = $(this).attr('v_key');
+            $('.vcode-list').append('<img v_key="'+ key +'" src="api/one.php?key='+ key +'&_t='+ Date.now() +'">');
+        });
+
+        // 清除验证码
+        $('.action').click(function() {
+            if ($('.vcode-list img').length <= 0) {
+                return true;
+            }
+
+            $('.vcode-list img:last').remove();
+        });
+
+        // 确认提交
+        $('.verify').click(function() {
+            var $img = $('.vcode-list img');
+            if ($img.length < 4) {
+                alert('请输入至少 4 位验证码。');
+                return false;
+            }
+
+            var captcha_code = '';
+            $img.each(function () {
+                captcha_code += $(this).attr('v_key');
+            });
+
+            $.post('api/check.php', {captcha_code: captcha_code}, function(data) {
+                if (data == 0) {
+                    refresh();
+                    alert('验证码错误，请重新输入。');
+                    return false;
+                }
+
+                alert('恭喜您，验证码输入正确！')
+            });
+        });
+    </script>
+</body>
+</html>
