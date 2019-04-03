@@ -6,7 +6,7 @@
 
 - [basic][1] PHP 验证码基础示例，[参考1][4]
 - [securimage][2] [Securimage][5] 的使用示例
-- [chinese][3] 基于 Securimage 开发的中文验证码示例
+- [chinese][3] 基于 [Securimage][5] 开发的中文验证码示例
 
 ## 安装
 
