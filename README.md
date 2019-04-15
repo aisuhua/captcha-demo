@@ -30,15 +30,19 @@ server {
 
 ## 截图演示
 
+### 基础示例
+
 http://captcha.example.com/basic/demo1.php
 
 ![](basic.png)
+
+#### 中文验证码
 
 http://captcha.example.com/chinese/index.html
 
 ![](chinese.png)
 
-中文验证码输入时的样子
+输入时的样子
 
 ![](chinese_inputing.png)
 
