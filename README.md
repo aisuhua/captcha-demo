@@ -36,7 +36,7 @@ http://captcha.example.com/basic/demo1.php
 
 ![](basic.png)
 
-#### 中文验证码
+### 中文验证码
 
 http://captcha.example.com/chinese/index.html
 
